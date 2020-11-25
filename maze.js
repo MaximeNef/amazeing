@@ -4,6 +4,7 @@ let x ;
 let y ;
 let grosseline = [];
 let level = 0
+
  let lvl1 =
     `***********.*
 *S.....**.*.T
@@ -26,8 +27,30 @@ let level = 0
 *.********************
 *...................T*`   
 
+let lvl3 =`********
+****S***
+****.***
+****.***
+****.***
+*......*
+*.****.*
+*..***.*
+*..***.*
+**.*****
+*T.*****
+********`  
+
+let lvl4 = 
+`******************
+*....*..****.*..***
+*.****.*.***.*.*.**
+*...**.**.**.*.**.*
+*.****.***.*.*.*.**
+*....*.****..*..***
+*******************`
+
 const multiline=[
-    lvl1, lvl2
+    lvl1, lvl2, lvl3, lvl4
 ]
 
 
@@ -143,13 +166,15 @@ generateMaze();
 
 
 
+
+
 document.body.addEventListener("keydown", function (e) {
     const perso = document.querySelector(".perso");
   let dest;
 
   
     if (e.code === "ArrowRight") {
-
+        
         x++;
         dest = grosseline[y][x];
         
@@ -214,6 +239,7 @@ document.body.addEventListener("keydown", function (e) {
 
         y++;
         dest = grosseline[y][x];
+
         
         if (dest.classList.contains("mur")) {
           alert("that's a wall!");
@@ -229,33 +255,47 @@ document.body.addEventListener("keydown", function (e) {
         }
     }
     dest.appendChild(perso) 
-
-    if (dest.classList.contains("tresor")) {
-        
-        console.log('end')
-        setTimeout(youWon, 100)
+   
+    if (dest.classList.contains("tresor")) { 
+        window.setTimeout(
+            function () {
+                
+        dest = grosseline[y][x];
+        alert("YYEEAAAAHHHHH LET'S GOO !!!! ");
         x=0
         y=0
-        body.innerHTML=''
-        level++
-        generateMaze()
+        
+        body.innerHTML='';
+        level++;
+        seconds = 0
+        minutes = 0
+        generateMaze();
+    }, 200)
+        
       }
+
       
       
 })
 
-    function youWon(){
-        alert("si si la street")
-    }
+  
 
     
 
+  
 
 
 
 
-   
-   /*  let seconds = 0;
+
+
+
+
+
+
+
+    
+     let seconds = 0;
     let minutes = 0;
     const main = document.querySelector('main')
     const section = document.createElement('section')
@@ -269,7 +309,7 @@ document.body.addEventListener("keydown", function (e) {
     function timer() {
         const para = document.querySelector('p')
         if (seconds >= 0) {
-            para.textContent = 'Timer: '+seconds + ' s'
+            para.textContent = seconds + ' s'
             if (seconds > 60) {
                     para.textContent = minutes + ' mn ' + (seconds - (minutes * 60)) + ' s'
                     
@@ -282,4 +322,6 @@ document.body.addEventListener("keydown", function (e) {
         }
         seconds++
     }
-    const interval = setInterval(timer, 1000) */
+    const interval = setInterval(timer, 1000)  
+
+    
