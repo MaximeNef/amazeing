@@ -1,12 +1,10 @@
 const body = document.querySelector("body");
 body.className = "body";
-
-/* const nbrcases = "13"
-const lrgcases = "40"
-body.style.width = (nbrcases * lrgcases+"px") */
-
-
- const multiline =
+let x ;
+let y ;
+let grosseline = [];
+let level = 0
+ let lvl1 =
     `***********.*
 *S.....**.*.T
 *****.....*.*
@@ -20,24 +18,73 @@ body.style.width = (nbrcases * lrgcases+"px") */
 *....********` 
 
 
-/*  const multiline2 = 
+  let lvl2 = 
 `**********************
 *..S.................*
 ********************.*
 *....................*
 *.********************
-*...................T*`   */
+*...................T*`   
+
+const multiline=[
+    lvl1, lvl2
+]
 
 
 
-const lineArr = multiline.split("\n");
+//const lineArr = multiline.split("\n");
 // lineArr = toutes les lignes horrizontale du labyrinthe
 
 
+function generateMaze(){
+    const lineArr = multiline[level].split("\n");
+    
+    for (let i = 0; i <= lineArr.length - 1; i++) {
+        grosseline[i]=[]
+        const lineDiv = document.createElement('div');
+        lineDiv.classList.add('lineDiv');
+        lineDiv.id = i
+        const line = lineArr[i];
+        for (let j = 0; j <= line.length - 1; j++) {
+            const characterDiv = document.
+            createElement('div');
+            grosseline[i][j]=characterDiv
+            console.log(grosseline)
+            const character = line.split("")
+            characterDiv.innerHTML = character[j];
+            characterDiv.classList.add('tile');
+            lineDiv.appendChild(characterDiv);
+            if (characterDiv.innerHTML == "*") {
+                characterDiv.classList.add("mur");
+                characterDiv.innerHTML = "";
+            } else if (characterDiv.innerHTML == ".") {
+                characterDiv.classList.add('chemin');
+                characterDiv.innerHTML = "";
+            } else if (characterDiv.innerHTML == "S") {
+                characterDiv.classList.add('start');
+                characterDiv.innerHTML = "";
+                x=j;
+                y=i;
+                const balle = document.createElement('div')
+                balle.className = "perso"
+                characterDiv.appendChild(balle)
+            } else if (characterDiv.innerHTML == "T") {
+                characterDiv.classList.add('tresor');
+                characterDiv.innerHTML = "";
+            }
+           
+        }
+        body.appendChild(lineDiv)
+    }  
+  
+} 
 
-//const generateMaze = maze
+
+ 
 //const lineArr = maze.split('\n')
-console.log(lineArr)
+
+
+//console.log(lineArr)
  
 
 
@@ -59,7 +106,8 @@ console.log(lineArr)
     }  
 } */
 
-for (let i = 0; i <= lineArr.length - 1; i++) {
+
+/* for (let i = 0; i <= lineArr.length - 1; i++) {
     const lineDiv = document.createElement('div');
     lineDiv.classList.add('lineDiv');
     lineDiv.id = i
@@ -86,91 +134,128 @@ for (let i = 0; i <= lineArr.length - 1; i++) {
        
     }
     body.appendChild(lineDiv)
-}
+} */
 
 
+generateMaze();
 
 
-const balle = document.createElement('div')
-balle.className = "perso"
-document.querySelector("#\\31  > div.tile.start").appendChild(balle)
-
-let posX = 2;
-let posY = 3;
 
 
 
 document.body.addEventListener("keydown", function (e) {
-//const mazes = [multiline1, multiline2] 
+    const perso = document.querySelector(".perso");
+  let dest;
 
+  
     if (e.code === "ArrowRight") {
 
-        if (document.querySelector("body  > div:nth-child(" + posY + ")> div:nth-child(" + (posX + 1) + ")").classList.contains('mur')) {
+        x++;
+        dest = grosseline[y][x];
+        
+        if (dest.classList.contains("mur")) {
+          alert("that's a wall!");
+          x--;
+          dest = grosseline[y][x];
+          
+          
+
+        }}
+       /*  if (document.querySelector("body  > div:nth-child(" + y + ")> div:nth-child(" + (x + 1) + ")").classList.contains('mur')) {
             console.log('hiit the wall')
         } else {
-            posX++
-            document.querySelector("body > div:nth-child(" + posY + ")> div:nth-child(" + posX + ")").appendChild(balle)
+            x++
+            document.querySelector("body > div:nth-child(" + y + ")> div:nth-child(" + x + ")").appendChild(balle)
             console.log(e.code)
         }
-
-    }
+ */
+   
 
 
     if (e.code === "ArrowLeft") {
-        if (document.querySelector("body > div:nth-child(" + posY + ")> div:nth-child(" + (posX - 1) + ")").classList.contains('mur')) {
+        x--;
+        dest = grosseline[y][x];
+        
+        if (dest.classList.contains("mur")) {
+          alert("that's a wall!");
+          x++;
+          dest = grosseline[y][x];
+       /*  if (document.querySelector("body > div:nth-child(" + y + ")> div:nth-child(" + (x - 1) + ")").classList.contains('mur')) {
             console.log('hiit the wall')
         } else {
-            posX--
-            document.querySelector("body > div:nth-child(" + posY + ")> div:nth-child(" + posX + ")").appendChild(balle)
-            console.log(e.code)
+            x--
+            document.querySelector("body > div:nth-child(" + y + ")> div:nth-child(" + x + ")").appendChild(balle)
+            console.log(e.code) */
         }
     }
 
 
     if (e.code === "ArrowUp") {
-        if (document.querySelector("body > div:nth-child(" + (posY - 1) + ")> div:nth-child(" + posX + ")").classList.contains('mur')) {
+        y--;
+        dest = grosseline[y][x];
+       
+        if (dest.classList.contains("mur")) {
+          alert("that's a wall!");
+          y++;
+          dest = grosseline[y][x];
+       /*  if (document.querySelector("body > div:nth-child(" + (y - 1) + ")> div:nth-child(" + x + ")").classList.contains('mur')) {
             
             console.log('hiit the wall')
         
         } else {
-            posY--
-            document.querySelector("body > div:nth-child(" + (posY) + ")> div:nth-child(" + posX + ")").appendChild(balle)
-            console.log(e.code)
+            y--
+            document.querySelector("body > div:nth-child(" + (y) + ")> div:nth-child(" + x + ")").appendChild(balle)
+            console.log(e.code) */
         }
     }
 
 
     if (e.code === "ArrowDown") {
-        if (document.querySelector("body > div:nth-child(" + (posY + 1) + ")> div:nth-child(" + posX + ")").classList.contains('mur')) {
+
+        y++;
+        dest = grosseline[y][x];
+        
+        if (dest.classList.contains("mur")) {
+          alert("that's a wall!");
+          y--;
+          dest = grosseline[y][x];
+       /*  if (document.querySelector("body > div:nth-child(" + (y + 1) + ")> div:nth-child(" + x + ")").classList.contains('mur')) {
             console.log('hiit the wall')
             
         } else {
-            posY++
-            document.querySelector("body > div:nth-child(" + (posY) + ")> div:nth-child(" + posX + ")").appendChild(balle)
-            console.log(e.code)
+            y++
+            document.querySelector("body > div:nth-child(" + (y) + ")> div:nth-child(" + x + ")").appendChild(balle)
+            console.log(e.code) */
         }
     }
+    dest.appendChild(perso) 
 
-    if (document.querySelector("body > div:nth-child(" + (posY) + ")> div:nth-child(" + posX + ")").classList.contains('tresor')) {
+    if (dest.classList.contains("tresor")) {
+        
         console.log('end')
         setTimeout(youWon, 100)
+        x=0
+        y=0
+        body.innerHTML=''
+        level++
+        generateMaze()
       }
-      //lvl++
-     
+      
+      
 })
 
     function youWon(){
         alert("si si la street")
     }
 
-    //generateMaze(multiline1)
+    
 
 
 
 
 
-    let nblvl = 0
-    let seconds = 0;
+   
+   /*  let seconds = 0;
     let minutes = 0;
     const main = document.querySelector('main')
     const section = document.createElement('section')
@@ -197,4 +282,4 @@ document.body.addEventListener("keydown", function (e) {
         }
         seconds++
     }
-    const interval = setInterval(timer, 1000)
+    const interval = setInterval(timer, 1000) */
